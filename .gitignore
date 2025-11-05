@@ -1,0 +1,77 @@
+# ----------------------------------------
+# Git ignore for Chrome extension workspace
+# Covers macOS, Node/Vite, build outputs, editors, env files
+# ----------------------------------------
+
+# macOS
+.DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+/node_modules/
+node_modules/
+/.pnp/
+.pnp.js
+
+# Build outputs
+/dist/
+/build/
+/out/
+/.parcel-cache/
+/.vite/
+/.turbo/
+
+# Vite / Rollup
+/.rpt2_cache/
+/*.rts2_cache_cjs
+
+# TypeScript
+*.tsbuildinfo
+
+# Coverage
+/coverage/
+coverage-*.json
+.nyc_output/
+
+# dotenv environment variables
+.env
+.env.*.local
+.env.local
+.env.production.local
+.env.development.local
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# System files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Archives and package files (ignore generated CRX/key files)
+*.crx
+*.pem
+*.key
+*.p12
+
+# Test output
+/junit-report.xml
+/test-results/
+
+# Binary cache / build artifacts
+*.tgz
+*.cache
+
+# Misc
+/.DS_Store
+*.swp
+*~
