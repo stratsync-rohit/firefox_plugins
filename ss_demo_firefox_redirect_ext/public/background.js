@@ -1,5 +1,3 @@
-// background-wrapper.js (MV2 version)
-console.log("Background script loaded — StratSync ready");
 
 chrome.browserAction.onClicked.addListener(function (tab) {
   console.log("Action clicked — creating window");
