@@ -1,26 +1,16 @@
 {
-  "manifest_version": 3,
-  "name": "StratSync -  AI Co-Pilot",
-  "version": "2.3.1",
+  "manifest_version": 2,
+  "name": "StratSync - AI Co-Pilot",
+  "version": "1.0.2",
   "description": "Your AI co-pilot for customer success and business growth.",
-  "permissions": ["storage", "identity", "tabs"],
-  "oauth2": {
-    "client_id": "788327203829-mguoqoca58t8t4pldqlrr303uc23vsp9.apps.googleusercontent.com",
-    "scopes": [
-      "openid",
-      "email",
-      "profile",
-      "https://www.googleapis.com/auth/userinfo.email"
-    ]
+
+  "icons": {
+    "16": "public/icons/icon16.png",
+    "48": "public/icons/icon48.png",
+    "128": "public/icons/icon128.png"
   },
-  "host_permissions": [
-    "https://accounts.google.com/*",
-    "https://www.googleapis.com/*"
-  ],
-  "background": {
-    "service_worker": "dist/background.js"
-  },
-  "action": {
+
+  "browser_action": {
     "default_popup": "dist/index.html",
     "default_icon": {
       "16": "public/icons/icon16.png",
@@ -28,12 +18,26 @@
       "128": "public/icons/icon128.png"
     }
   },
-  "icons": {
-    "16": "public/icons/icon16.png",
-    "48": "public/icons/icon48.png",
-    "128": "public/icons/icon128.png"
+
+  "permissions": [
+    "storage",
+    "tabs",
+    "https://accounts.google.com/*",
+    "https://www.googleapis.com/*"
+  ],
+
+  "background": {
+    "scripts": [
+      "dist/background.js"
+    ],
+    "persistent": true
   },
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
-  }
+
+  "content_security_policy": "script-src 'self'; object-src 'self';",
+
+  "web_accessible_resources": [
+    "public/icons/icon16.png",
+    "public/icons/icon48.png",
+    "public/icons/icon128.png"
+  ]
 }
