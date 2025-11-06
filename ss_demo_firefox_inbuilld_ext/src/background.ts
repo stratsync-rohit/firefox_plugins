@@ -2,6 +2,36 @@
 console.log("Service worker loaded.");
 
 
+
+
+const idAPI = (browser || chrome);
+console.log('location.protocol =>', location.protocol);
+console.log('has identity.getRedirectURL =>', !!(idAPI && idAPI.identity && typeof idAPI.identity.getRedirectURL === 'function'));
+if (idAPI && idAPI.identity && typeof idAPI.identity.getRedirectURL === 'function') {
+  console.log('Redirect URL (exact) =>', idAPI.identity.getRedirectURL());
+}
+const CLIENT_ID = "<PUT YOUR CLIENT ID HERE OR LEAVE AS IS>";
+try {
+  const redirect = (idAPI && idAPI.identity && typeof idAPI.identity.getRedirectURL === 'function') ? idAPI.identity.getRedirectURL() : '(no-redirect)';
+  const authUrl =
+    "https://accounts.google.com/o/oauth2/v2/auth" +
+    `?client_id=${encodeURIComponent(CLIENT_ID)}` +
+    `&response_type=token` +
+    `&scope=${encodeURIComponent("openid email profile")}` +
+    `&redirect_uri=${encodeURIComponent(redirect)}` +
+    `&prompt=consent`;
+  console.log('AUTH URL (what extension sends) =>', authUrl);
+} catch(e) { console.error(e); }
+
+
+
+
+
+
+
+
+
+console.log("Background script running.");
 function getErrorMessage(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
 }

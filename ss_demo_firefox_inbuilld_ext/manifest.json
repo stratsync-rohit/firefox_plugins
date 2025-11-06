@@ -22,11 +22,12 @@
   "permissions": [
     "storage",
     "tabs",
+    "identity",
     "https://accounts.google.com/*",
     "https://www.googleapis.com/*"
   ],
   "browser_specific_settings": {
-  "gecko": { "id": "rohit@stratsyc.ai" }
+  "gecko": {"id": "{96297c71-7739-4c43-b136-ec9ba005c215}"}
 },
 
   "background": {

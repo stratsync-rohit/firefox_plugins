@@ -409,7 +409,7 @@ import "react-toastify/dist/ReactToastify.css";
 /**
  * CONFIG - set these
  */
-const CLIENT_ID = "YOUR_CLIENT_ID.apps.googleusercontent.com"; // replace
+const CLIENT_ID = "788327203829-c8mqq2d18q4a101g57983ghout7i1a7i.apps.googleusercontent.com";
 const SCOPE = "openid email profile";
 
 /* ---------- small compatibility helpers ---------- */
