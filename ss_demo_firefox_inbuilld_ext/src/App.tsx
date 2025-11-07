@@ -513,10 +513,14 @@ export default function App() {
 
     setIsSigningIn(true);
     try {
+      console.log("Initiating Google login...");
+
       const redirectUri =
         typeof browserAPI.identity.getRedirectURL === "function"
           ? browserAPI.identity.getRedirectURL()
           : `${location.origin}/`;
+
+      console.log("Redirect URI:", redirectUri);
 
       const authUrl =
         "https://accounts.google.com/o/oauth2/v2/auth" +
@@ -526,50 +530,55 @@ export default function App() {
         `&redirect_uri=${encodeURIComponent(redirectUri)}` +
         `&prompt=consent`;
 
-      // opens the auth window and returns final redirect URL (with fragment)
+      console.log("Auth URL:", authUrl);
+
       const responseUrl: string = await browserAPI.identity.launchWebAuthFlow({
         interactive: true,
         url: authUrl,
       });
 
-      // responseUrl example:
-      // https://.../callback#access_token=ya29.a0Af...&token_type=Bearer&expires_in=3599
+      console.log("Response URL:", responseUrl); // Log the response URL
+
       const hash = responseUrl.split("#")[1] || "";
       const params = new URLSearchParams(hash);
       const accessToken = params.get("access_token");
       const expiresIn = Number(params.get("expires_in") || 3600);
 
+      console.log("Access Token:", accessToken); // Log the access token
+      console.log("Token Expiry (seconds):", expiresIn); // Log token expiry
+
       if (!accessToken) {
         throw new Error("No access token received from Google.");
       }
 
-      // store token and expiry
-      const expiryMs = Date.now() + expiresIn * 1000;
-      await storageSet({ oauthToken: accessToken, oauthTokenExpiry: expiryMs });
-
-      // fetch userinfo and update UI
       const userRes = await fetch("https://www.googleapis.com/oauth2/v2/userinfo", {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
+
+      console.log("User Info Response Status:", userRes.status); // Log user info response status
+      console.log("User Info Response Body:", await userRes.text()); // Log user info response body
 
       if (!userRes.ok) {
         throw new Error("Failed to fetch userinfo");
       }
 
       const userData = await userRes.json();
+      console.log("User Data:", userData); // Log user data
+
       const email: string | undefined = userData?.email?.toLowerCase();
       const allowed = !!email && email.endsWith("@stratsync.ai");
 
       if (allowed) {
         setUser(userData);
         setIsLoggedIn(true);
-        setShowLogin(false);
+        setShowLogin(false); // Only hide the popup after successful login
         setShowUnauthorized(false);
+        console.log("Login successful");
         toast.success("Signed in successfully!", { autoClose: 2000 });
       } else {
         // unauthorized domain: cleanup
         await storageRemove(["oauthToken", "oauthTokenExpiry"]);
-        setShowLogin(false);
+        setShowLogin(true); // Keep the popup open for unauthorized users
         setShowUnauthorized(true);
         toast.error("Unauthorized Access!");
       }
